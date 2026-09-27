@@ -21,6 +21,7 @@ class AnggotaController extends Controller
         'email'         => 'required|email|unique:anggotas,email',
         'kontak'        => 'required|string|max:20',
         'role'          => 'required|string',
+        'keahlian'      => 'nullable|string|max:255',
     ]);
 
     // Proses simpan data...
@@ -51,6 +52,7 @@ class AnggotaController extends Controller
             'gmail'         => 'nullable|email',
             'no_tlpn'       => 'nullable|string|max:20',
             'role'          => 'required|string',
+            'keahlian'      => 'nullable|string|max:255',
             'foto'          => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048', 
         ]);
 
@@ -71,6 +73,7 @@ class AnggotaController extends Controller
         $anggota->gmail = $request->gmail;
         $anggota->no_tlpn = $request->no_tlpn;
         $anggota->role = $request->role;
+        $anggota->keahlian = $request->keahlian;
         $anggota->save();
 
         return redirect()->route('dashboard.anggota.index') // Sesuaikan nama route index kamu

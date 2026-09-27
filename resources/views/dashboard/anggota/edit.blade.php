@@ -8,7 +8,7 @@
         <div class="card border-0 shadow-sm rounded-4 p-4">
             <h5 class="fw-bold mb-4"><i class="bi bi-person-badge text-primary me-2"></i>Edit Data Anggota</h5>
             
-            <!-- SESUAIKAN route('dashboard.anggota.update') DENGAN ROUTE MILIKMU -->
+            <!-- Pastikan routenya sesuai (dashboard.anggota.update) -->
             <form action="{{ route('dashboard.anggota.update', $anggota->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 @method('PUT')
@@ -57,6 +57,12 @@
                             @endforeach
                         </select>
                     </div>
+                </div>
+
+                <!-- FORM INPUT KEAHLIAN YANG BENAR -->
+                <div class="mb-3">
+                    <label class="form-label small fw-semibold">Keahlian (Opsional)</label>
+                    <input type="text" name="keahlian" class="form-control" value="{{ $anggota->keahlian }}" placeholder="Contoh: Desain Grafis, IT, Teknisi">
                 </div>
 
                 <div class="mb-4">
