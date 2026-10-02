@@ -25,59 +25,63 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-muted">Nama Lengkap</label>
-                        <input type="text" name="nama" class="form-control" placeholder="Contoh: Tulus Adiguno" required>
+                        <!-- Ditambahkan value="old('nama')" -->
+                        <input type="text" name="nama" class="form-control" placeholder="Contoh: Tulus Adiguno" value="{{ old('nama') }}" required>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-muted">Jenis Kelamin</label>
+                        <!-- Ditambahkan logika old() pada option -->
                         <select name="jenis_kelamin" class="form-select" required>
                             <option value="">-- Pilih Jenis Kelamin --</option>
-                            <option value="L">Laki-laki (L)</option>
-                            <option value="P">Perempuan (P)</option>
+                            <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki (L)</option>
+                            <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan (P)</option>
                         </select>
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label small fw-bold text-muted">Gmail / Email</label>
-                        <input type="email" name="email" class="form-control" placeholder="contoh@gmail.com" required>
+                        <!-- Ditambahkan value="old('email')" -->
+                        <input type="email" name="email" class="form-control" placeholder="contoh@gmail.com" value="{{ old('email') }}" required>
                     </div>
 
                     <div class="mb-3">
-                        <!-- DIPERBAIKI: name diubah menjadi no_tlpn agar sesuai dengan database -->
                         <label class="form-label small fw-bold text-muted">No. Telepon / WhatsApp</label>
-                        <input type="text" name="no_tlpn" class="form-control" placeholder="08123456789" required>
+                        <!-- Ditambahkan value="old('no_tlpn')" -->
+                        <input type="text" name="no_tlpn" class="form-control" placeholder="08123456789" value="{{ old('no_tlpn') }}" required>
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label small fw-semibold">Keahlian (Opsional)</label>
-                        <input type="text" name="keahlian" class="form-control" placeholder="Contoh: Desain Grafis, IT, Teknisi">
+                        <!-- Ditambahkan value="old('keahlian')" -->
+                        <input type="text" name="keahlian" class="form-control" placeholder="Contoh: Desain Grafis, IT, Teknisi" value="{{ old('keahlian') }}">
                     </div>
                     
                     <div class="mb-3">
                         <label class="form-label fw-bold text-muted small">Role / Jabatan</label>
+                        <!-- Ditambahkan logika old() pada option -->
                         <select name="role" class="form-select" required>
                             <option value="">-- Pilih Jabatan --</option>
-                            <option value="Pembina">Pembina</option>
-                            <option value="Ketua">Ketua</option>
-                            <option value="Wakil Ketua">Wakil Ketua</option>
-                            <option value="Sekretaris">Sekretaris</option>
-                            <option value="Bendahara">Bendahara</option>
-                            <option value="PDD (Publikasi, Dekorasi & Dokumentasi)">PDD (Publikasi, Dekorasi & Dokumentasi)</option>
-                            <option value="Humas">Humas</option>
-                            <option value="Sie Konsumsi">Sie Konsumsi</option>
-                            <option value="Sie Perlengkapan">Sie Perlengkapan</option>
-                            <option value="Sie Keamanan">Sie Keamanan</option>
-                            <option value="Korlap">Korlap</option>
-                            <option value="Sie Kebersihan">Sie Kebersihan</option>
-                            <option value="Anggota">Anggota</option>
-                            <option value="Admin">Admin</option>
+                            <option value="Pembina" {{ old('role') == 'Pembina' ? 'selected' : '' }}>Pembina</option>
+                            <option value="Ketua" {{ old('role') == 'Ketua' ? 'selected' : '' }}>Ketua</option>
+                            <option value="Wakil Ketua" {{ old('role') == 'Wakil Ketua' ? 'selected' : '' }}>Wakil Ketua</option>
+                            <option value="Sekretaris" {{ old('role') == 'Sekretaris' ? 'selected' : '' }}>Sekretaris</option>
+                            <option value="Bendahara" {{ old('role') == 'Bendahara' ? 'selected' : '' }}>Bendahara</option>
+                            <option value="PDD (Publikasi, Dekorasi & Dokumentasi)" {{ old('role') == 'PDD (Publikasi, Dekorasi & Dokumentasi)' ? 'selected' : '' }}>PDD (Publikasi, Dekorasi & Dokumentasi)</option>
+                            <option value="Humas" {{ old('role') == 'Humas' ? 'selected' : '' }}>Humas</option>
+                            <option value="Sie Konsumsi" {{ old('role') == 'Sie Konsumsi' ? 'selected' : '' }}>Sie Konsumsi</option>
+                            <option value="Sie Perlengkapan" {{ old('role') == 'Sie Perlengkapan' ? 'selected' : '' }}>Sie Perlengkapan</option>
+                            <option value="Sie Keamanan" {{ old('role') == 'Sie Keamanan' ? 'selected' : '' }}>Sie Keamanan</option>
+                            <option value="Korlap" {{ old('role') == 'Korlap' ? 'selected' : '' }}>Korlap</option>
+                            <option value="Sie Kebersihan" {{ old('role') == 'Sie Kebersihan' ? 'selected' : '' }}>Sie Kebersihan</option>
+                            <option value="Anggota" {{ old('role') == 'Anggota' ? 'selected' : '' }}>Anggota</option>
+                            <option value="Admin" {{ old('role') == 'Admin' ? 'selected' : '' }}>Admin</option>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-success w-100 rounded-3 fw-bold py-2">
                         <i class="bi bi-save me-1"></i> Simpan Anggota
                     </button>
                     
-                    <!-- TAMPILKAN PESAN ERROR JIKA ADA VALIDASI YANG GAGAL -->
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show shadow-sm rounded-3 mt-3" role="alert">
                             <i class="bi bi-exclamation-triangle-fill me-2"></i><strong>Gagal Menyimpan!</strong> Periksa kembali inputan kamu:
@@ -127,7 +131,6 @@
                                     @endif
                                 </td>
                                 
-                                <!-- DIPERBAIKI: Kolom Kontak dan Keahlian ditampilkan dengan benar -->
                                 <td>
                                     <span class="fw-medium text-dark"><i class="bi bi-telephone-fill small text-muted me-1"></i> {{ $item->no_tlpn ?? '-' }}</span>
                                     @if($item->keahlian)
@@ -139,7 +142,6 @@
                                 </td>
                                 
                                 <td class="text-center">
-                                    <!-- DIPERBAIKI: Tombol Edit dan Hapus disejajarkan rapi -->
                                     <div class="d-flex gap-2 justify-content-center">
                                         <a href="{{ route('dashboard.anggota.edit', $item->id) }}" class="btn btn-sm btn-outline-primary rounded-circle" title="Edit">
                                             <i class="bi bi-pencil"></i>

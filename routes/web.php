@@ -12,6 +12,7 @@ use App\Http\Controllers\WebProfile\ProkerController;
 use App\Http\Controllers\WebProfile\PengurusController;
 use App\Http\Controllers\AnggotaController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\JadwalRondaController;
 
 // ==========================================
 // 1. Landing Page Publik
@@ -86,4 +87,22 @@ Route::middleware(['auth'])->prefix('dashboard')->as('dashboard.')->group(functi
     Route::resource('aspirasi', AspirasiController::class)->only(['index', 'destroy']);
     Route::patch('aspirasi/{id}/status', [AspirasiController::class, 'updateStatus'])->name('aspirasi.updateStatus');
     Route::get('/struktur-organisasi', [PublicController::class, 'struktur'])->name('public.struktur');
-});
+    // Menu Jadwal Ronda
+        Route::get('jadwal-ronda', [\App\Http\Controllers\JadwalRondaController::class, 'index'])->name('jadwal-ronda.index');
+        Route::post('jadwal-ronda/generate', [\App\Http\Controllers\JadwalRondaController::class, 'generate'])->name('jadwal-ronda.generate');
+        Route::delete('jadwal-ronda/hapus/{periode}', [\App\Http\Controllers\JadwalRondaController::class, 'destroyPeriode'])->name('jadwal-ronda.destroy-periode');
+        Route::get('jadwal-ronda/pdf/{periode}', [\App\Http\Controllers\JadwalRondaController::class, 'cetakPdf'])->name('jadwal-ronda.pdf');
+    // 4. Modul Layanan Surat Otomatis
+    // ==========================================
+    Route::prefix('surat')->as('surat.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\SuratController::class, 'index'])->name('index');
+        
+        // Rute untuk cetak PDF berdasarkan jenis
+        Route::post('/cetak/umum', [\App\Http\Controllers\SuratController::class, 'cetakUmum'])->name('cetak.umum');
+        Route::post('/cetak/edaran', [\App\Http\Controllers\SuratController::class, 'cetakEdaran'])->name('cetak.edaran');
+        Route::post('/cetak/ktp', [\App\Http\Controllers\SuratController::class, 'cetakKtp'])->name('cetak.ktp');
+        
+        // Hapus riwayat surat
+        Route::delete('/{id}', [\App\Http\Controllers\SuratController::class, 'destroy'])->name('destroy');
+    });
+  });

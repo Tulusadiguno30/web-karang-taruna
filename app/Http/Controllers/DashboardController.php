@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Anggota; // <--- 1. Tambahkan model Anggota di sini
 use App\Models\KasMasuk;
 use App\Models\KasKeluar;
 use App\Models\Proker;
@@ -52,7 +53,9 @@ class DashboardController extends Controller
     private function dataKetua(): array 
     {
         return [
-            'total_anggota' => User::where('role', 'anggota')->count(),
+            // 2. Ubah hitungan menjadi menghitung seluruh data di tabel anggotas
+            'total_anggota' => Anggota::count(), 
+            
             'saldo_kas' => KasMasuk::sum('nominal') - KasKeluar::sum('nominal'),
             'kas_masuk_bulan' => KasMasuk::whereMonth('created_at', now()->month)->sum('nominal'),
             'kas_keluar_bulan' => KasKeluar::whereMonth('created_at', now()->month)->sum('nominal'),
@@ -66,6 +69,7 @@ class DashboardController extends Controller
     {
         return [
             'total_user' => User::count(),
+            'total_anggota' => Anggota::count(), // Sekalian diperbaiki untuk tampilan admin
             'pengurus_aktif' => Pengurus::where('is_active', true)->count(),
             'total_galeri' => Galeri::count(),
             'proker_berjalan' => Proker::where('status', 'Berjalan')->count()
